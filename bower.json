@@ -1,0 +1,19 @@
+{
+  "name": "nd-angular",
+  "version": "0.0.0",
+  "authors": [
+    "Asaf Amrami <asaf_am@yahoo.com>"
+  ],
+  "description": "NDJS angular front end",
+  "dependencies": {
+    "angular": ">=1"
+  },
+  "license": "AGPL-1.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

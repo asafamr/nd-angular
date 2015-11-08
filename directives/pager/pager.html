@@ -1,0 +1,9 @@
+<div class="pager" ng-show="vm.showPager"><ul class="pager">
+	<li class="previous" ng-class="{disabled:!vm.isBackEnabled()}" ng-click="vm.goBackPage()">
+		<a href="javascript:void(0);"><span aria-hidden="true">&larr;</span> Back</a>
+	</li>
+	<li class="next" ng-class="{disabled:!vm.isNextEnabled()}" ng-click="vm.goNextPage()">
+		<a href="javascript:void(0);">Next <span aria-hidden="true">&rarr;</span></a>
+	</li>
+	</ul> 
+</div>
