@@ -6,7 +6,7 @@
   ],
   "description": "NDJS angular front end",
   "dependencies": {
-    "angular": "~1.4",
+    "angular": "~1.4"
   },
   "main": [
     "./dist/nd-angualr.css",
