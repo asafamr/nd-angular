@@ -1,0 +1,36 @@
+{
+  "name": "nd-angular",
+  "version": "0.0.0",
+  "description": "NDJS angular front end",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asafamr/nd-angular.git"
+  },
+  "author": "Asaf Amrami",
+  "license": "AGPL-1.0",
+  "bugs": {
+    "url": "https://github.com/asafamr/nd-angular/issues"
+  },
+  "devDependencies": {
+    "dox": "~0.4.4",
+    "grunt": "~0.4.0",
+    "grunt-angular-templates": "^0.5.7",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-imagemin": "~0.4.0",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-less": "~0.8.2",
+    "grunt-contrib-qunit": "~v0.3.0",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-phantomcss-gitdiff": "0.0.7",
+    "grunt-resemble-cli": "0.0.8",
+    "grunt-text-replace": "~0.3.11"
+  },
+  "homepage": "https://github.com/asafamr/nd-angular#readme"
+}

@@ -1,0 +1,68 @@
+.loading-wheel
+{
+	background-image: url('../images/loading.gif');
+	width: 32px;
+	height: 32px;
+}
+
+
+.modal.fade .modal-dialog {
+	-webkit-transition: -webkit-transform .2s ease-out;
+	-o-transition:      -o-transform .2s ease-out;
+	transition:         transform .2s ease-out;
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	-o-transform: translate(0, 0);
+	transform: translate(0, 0);
+	-webkit-transform: scale(0.95);
+	-moz-transform: scale(0.95);
+	-ms-transform: scale(0.95);
+	transform: scale(0.95);
+}
+.modal.in .modal-dialog {
+	-webkit-transform: translate(0, 0);
+	-ms-transform: translate(0, 0);
+	-o-transform: translate(0, 0);
+	transform: translate(0, 0);
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	transform: scale(1);
+}
+
+.modal-content {
+	border-radius: 3px;
+}
+.modal-header {
+	min-height: 20;
+	padding: 5px;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: #E2E2E2;
+}
+.modal-footer {
+	min-height: 15px;
+	padding: 0px 5px 0px 0px;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: #E2E2E2;
+}
+.modal-footer .btn
+{
+	border-radius: 2px;
+	background-color: #666666;
+	width:80px;
+	color: white;
+	padding: 2px;
+}
+#duck-pager
+{
+	position: absolute;
+	width:100%;
+	bottom: 5px;
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+#duck-pager .pager
+{
+	margin-bottom: 7px;
+}

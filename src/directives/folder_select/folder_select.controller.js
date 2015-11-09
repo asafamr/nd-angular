@@ -1,7 +1,7 @@
-/* global angular */
-'use strict';
+
 
 (function() {
+	'use strict';
 	angular.module('duck-angular')
 		.controller('duckFolderSelectController',DuckFolderSelect);
 
@@ -12,9 +12,9 @@
 		vm.dir=vm.dir;//bound outside
 		vm.dialogPicked=dialogPicked;
 		vm.startChoose=startChoose;
-		
+
 		activate();
-		
+
 		function dialogPicked(element)//from DOM - not angular
 		{
 			if(element && element.files && element.files[0])
@@ -38,8 +38,8 @@
 					vm.dir=baseDir;
 					//return duckClient.uiActions.fsGetDirTree(baseDir);
 				});
-			
-			
+
+
 		}
 
 

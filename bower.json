@@ -6,11 +6,17 @@
   ],
   "description": "NDJS angular front end",
   "dependencies": {
-    "angular": ">=1"
+    "angular": "~1.4",
   },
+  "main": [
+    "./dist/nd-angualr.css",
+    "./dist/nd-angualr.js"
+  ],
   "license": "AGPL-1.0",
   "ignore": [
     "**/.*",
+    "gruntfile.js",
+    "README.MD",
     "node_modules",
     "bower_components",
     "test",
