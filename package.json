@@ -1,6 +1,6 @@
 {
   "name": "nd-angular",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "NDJS angular front end",
   "main": "Gruntfile.js",
   "scripts": {

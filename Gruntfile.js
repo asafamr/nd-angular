@@ -171,7 +171,7 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', [/*'jshint:beforeconcat',*/ 'ngtemplates','concat','copy:style','cssmin',/*'jshint:afterconcat',*/'uglify','replace','copy:docs','dox']);
+  grunt.registerTask('default', [/*'jshint:beforeconcat',*/ 'ngtemplates','concat','copy:style','cssmin',/*'jshint:afterconcat',*/'uglify','replace','dox']);
   grunt.registerTask('js', ['concat','amd','uglify']);
   grunt.registerTask('css', ['copy','less']);
 
