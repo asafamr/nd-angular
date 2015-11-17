@@ -1,18 +1,17 @@
-/* global angular */
-'use strict';
 (function (){
+	'use strict';
 	var myUrl = document.currentScript.src;
-	angular.module('duck-angular')
-		.directive('duckProgress', DuckProgressDirective);
+	angular.module('ndAngular')
+		.directive('ndProgress', NDProgressDirective);
 
-	DuckProgressDirective.$inject=[];
-	function DuckProgressDirective()
+	NDProgressDirective.$inject=[];
+	function NDProgressDirective()
 	{
 		return {
 			scope: {settings:'='},
 			bindToController: true,
 			controllerAs:'vm',
-			controller:'DuckProgressController',
+			controller:'NDProgressController',
 			templateUrl: myUrl.replace('.js','.html')
 		};
 

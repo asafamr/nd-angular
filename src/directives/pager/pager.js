@@ -1,8 +1,7 @@
-'use strict';
 (function (){
+	'use strict';
 	var myUrl = document.currentScript.src;
-angular.module('duck-angular').directive('duckPager', ['duckClient',function(duck) {
-	
+	angular.module('ndAngular').directive('ndPager', ['ndAngular',function(ndAngular) {
   return {
 
 		scope: {},

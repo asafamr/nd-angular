@@ -3,11 +3,11 @@
 
 
 (function() {
-	angular.module('duck-angular')
+	angular.module('ndAngular')
 		.controller('DirectoryController',DirectoryController);
 
-	DirectoryController.$inject=['duckClient','$scope','$q'];
-	function DirectoryController(duckClient,$scope,$q)
+	DirectoryController.$inject=['ndAngular','$scope','$q'];
+	function DirectoryController(ndAngular,$scope,$q)
 	{
 		var vm = this;
 
@@ -29,7 +29,7 @@
 			},function(){
 				var toSend={};
 				toSend[settingName]=vm.dir;
-				sendingSettingPromise.then(function(){duckClient.uiActions.setUserSettings(toSend);});
+				sendingSettingPromise.then(function(){ndAngular.uiActions.setUserSettings(toSend);});
 										});
 			/*then(function(tree){
 					var getUniqueId=
@@ -81,10 +81,10 @@
 		}
 		function askDir()
 		{
-			duckModal.showModal().then(function(result){console.log(result);});
+			ndModal.showModal().then(function(result){console.log(result);});
 		}*/
 		/*
-		function getTreeConfig() 
+		function getTreeConfig()
 		{
 			return {
 				core: {

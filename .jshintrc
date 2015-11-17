@@ -13,9 +13,11 @@
     "trailing": true,
     "undef": true,
     "unused": true,
+    "-W082":false
 
     "globals": {
-        "angular": true
+        "angular": true,
+        "ndjs:":true
 
     }
 }

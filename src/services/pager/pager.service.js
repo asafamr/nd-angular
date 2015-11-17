@@ -1,19 +1,17 @@
-/* global angular*/
-'use strict';
-
 (function (){
+	'use strict';
 	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
-		.module('duck-angular')
-		.factory('duckPager', duckPager );
+		.module('ndAngular')
+		.factory('ndPager', NDPager );
 
-	duckPager.$inject=['duckPages','duckLogger','$state'];
-	function duckPager(duckPages,duckLogger,$state)
+	NDPager.$inject=['ndPages','ndLogger','$state'];
+	function NDPager(ndPages,ndLogger,$state)
 	{
 		var currenPageIdx=0;
 		var isVisible=false;
 		var nextEnabled=true;
-		
+
 		var changeCallbacks=[];
 		return {
 			show:	show,
@@ -28,18 +26,18 @@
 			setNextEnabled:setNextEnabled,
 			registerChangeCallback: registerChangeCallback
 		};
-		
+
 		function setNextEnabled(isNextEnabled)
 		{
 			nextEnabled=isNextEnabled;
 		}
-		
+
 		function gotoPageNumber(pageNum)
 		{
-			if(pageNum>=0 && pageNum <duckPages.length)
+			if(pageNum>=0 && pageNum <ndPages.length)
 			{
-				duckLogger.debug('going to page '+pageNum);
-				$state.go(duckPages[pageNum].name);
+				ndLogger.debug('going to page '+pageNum);
+				$state.go(ndPages[pageNum].name);
 				emitChange();
 			}
 
@@ -48,23 +46,23 @@
 		{
 			return currenPageIdx>0;
 		}
-		
+
 		function isNextEnabled()
 		{
-			return nextEnabled && currenPageIdx+1<duckPages.length;
+			return nextEnabled && currenPageIdx+1<ndPages.length;
 		}
 
 		function goNextPage()
-		{ 
+		{
 			if(isNextEnabled())
 			{
 				currenPageIdx+=1;
 				gotoPageNumber(currenPageIdx);
 			}
 		}
-		
+
 		function goBackPage()
-		{ 
+		{
 			if(this.isBackEnabled())
 			{
 				currenPageIdx-=1;

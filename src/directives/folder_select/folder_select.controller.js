@@ -1,12 +1,12 @@
-
+/*jshint -W082 */
 
 (function() {
 	'use strict';
-	angular.module('duck-angular')
-		.controller('duckFolderSelectController',DuckFolderSelect);
+	angular.module('ndAngular')
+		.controller('ndFolderSelectController',NDFolderSelect);
 
-	DuckFolderSelect.$inject=['duckClient','$log','$scope'];
-	function DuckFolderSelect(duckClient,$log,$scope)
+	NDFolderSelect.$inject=['ndAngular','$log','$scope'];
+	function NDFolderSelect(ndAngular,$log,$scope)
 	{
 		var vm = this;
 		vm.dir=vm.dir;//bound outside
@@ -32,11 +32,11 @@
 		}
 		function activate ()
 		{
-			duckClient.uiActions.fsGetWorkingDir().
-			then(function(baseDir)
+			ndAngular.uiActions.fsGetWorkingDir().
+				then(function(baseDir)
 				{
 					vm.dir=baseDir;
-					//return duckClient.uiActions.fsGetDirTree(baseDir);
+					//return ndAngular.uiActions.fsGetDirTree(baseDir);
 				});
 
 

@@ -1,29 +1,26 @@
-/* global angular */
-'use strict';
-
-
 (function() {
-	angular.module('duck-angular')
+	'use strict';
+	angular.module('ndAngular')
 		.controller('PagerController',PagerController);
 
-	PagerController.$inject=['duckClient','duckPager'];
-	function PagerController(duckClient,duckPager)
+	PagerController.$inject=['ndAngular','ndPager'];
+	function PagerController(ndAngular,ndPager)
 	{
 		var vm = this;
-		
-		
-		
-		vm.isBackEnabled=function(){return duckPager.isBackEnabled();};
-		vm.isNextEnabled=function(){return duckPager.isNextEnabled();};
-		vm.goBackPage=function(){return duckPager.goBackPage();};
-		vm.goNextPage=function(){return duckPager.goNextPage();};
-		
-		vm.showPager=function(){return duckPager.isVisble();};
+
+
+
+		vm.isBackEnabled=function(){return ndPager.isBackEnabled();};
+		vm.isNextEnabled=function(){return ndPager.isNextEnabled();};
+		vm.goBackPage=function(){return ndPager.goBackPage();};
+		vm.goNextPage=function(){return ndPager.goNextPage();};
+
+		vm.showPager=function(){return ndPager.isVisble();};
 		activate();
 
 		function activate ()
 		{
-			//duckPager.registerChangeCallback(updateVisibilty);
+			//ndPager.registerChangeCallback(updateVisibilty);
 		}
 		function updateVisibilty(isVis)
 		{

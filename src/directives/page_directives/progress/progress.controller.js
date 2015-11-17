@@ -1,12 +1,10 @@
-/*global angular*/
-'use strict';
-
 (function() {
-	angular.module('duck-angular')
-		.controller('DuckProgressController',DuckProgressController);
+	'use strict';
+	angular.module('ndAngular')
+		.controller('NDProgressController',NDProgressController);
 
-	DuckProgressController.$inject=['duckJobManager','duckPager','$scope'];
-	function DuckProgressController(duckJobManager,duckPager,$scope)
+	NDProgressController.$inject=['ndJobManager','ndPager','$scope'];
+	function NDProgressController(ndJobManager,ndPager,$scope)
 	{
 		var vm=this;
 
@@ -26,7 +24,7 @@
 			if(progress.progress===100)
 			{
 				vm.estimate='';
-				duckPager.setNextEnabled=true;
+				ndPager.setNextEnabled=true;
 			}
 			else
 			{
@@ -37,10 +35,10 @@
 		}
 		function activate()
 		{
-			duckPager.setNextEnabled=false;
-			duckPager.setBackEnabled=false;
-			$scope.$watch(function(){return duckJobManager.getJobProgress(vm.settings.job);},updateJobProgress);
-			duckJobManager.startJob(vm.settings.job);
+			ndPager.setNextEnabled=false;
+			ndPager.setBackEnabled=false;
+			$scope.$watch(function(){return ndJobManager.getJobProgress(vm.settings.job);},updateJobProgress);
+			ndJobManager.startJob(vm.settings.job);
 		}
 
 	}

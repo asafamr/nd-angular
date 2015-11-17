@@ -3,13 +3,13 @@
 (function (){
 	'use strict';
 	var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
-	angular.module('duck-angular').directive('duckFolderSelect', function() {
+	angular.module('ndAngular').directive('NDFolderSelect', function() {
 		return {
 			scope: {
 				dir: '=dir'
 			},
 			bindToController:true,
 			controllerAs:'vm',
-			controller: 'duckFolderSelectController',
+			controller: 'NDFolderSelectController',
 			templateUrl: myUrl.replace('.js','.html')
 		};});})();

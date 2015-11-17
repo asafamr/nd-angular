@@ -1,14 +1,12 @@
-/* global angular  */
-'use strict';
-
 (function (){
+	'use strict';
 	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
-		.module('duck-angular')
-		.factory('duckUIActionsRegister', duckUIActionsRegister );
+		.module('ndAngular')
+		.factory('ndUIActionsRegister', NDUIActionsRegister );
 
-	duckUIActionsRegister.$inject=['$q'];
-	function duckUIActionsRegister($q)
+	NDUIActionsRegister.$inject=['$q'];
+	function NDUIActionsRegister($q)
 	{
 
 		return {
@@ -36,13 +34,13 @@
 				});
 			};
 		}
-		
-		
+
+
 
 		function registerUiActions(uiActionsMeta,callUiActionCallback,to)
 		{
 			for(var actionName in uiActionsMeta){
-				(function(){//create a unique scope for each iteration 
+				(function(){//create a unique scope for each iteration
 					var action = uiActionsMeta[actionName];
 					var actionFunc = getCallUiActionClosure(action.name,callUiActionCallback);
 					var paramArrayStr = action.paramNames.join(',');

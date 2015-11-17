@@ -1,14 +1,12 @@
-/* global angular*/
-'use strict';
-
 (function (){
+	'use strict';
 	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
-		.module('duck-angular')
-		.factory('duckJobManager', duckJobManager );
+		.module('ndAngular')
+		.factory('ndJobManager', NDJobManager );
 
-	duckJobManager.$inject=['duckEvents','duckLogger','$rootScope','duckClient'];
-	function duckJobManager(duckEvents,duckLogger,$rootScope,duckClient)
+	NDJobManager.$inject=['ndEvents','ndLogger','$rootScope','ndAngular'];
+	function NDJobManager(ndEvents,ndLogger,$rootScope,ndAngular)
 	{
 		var jobsData;
 
@@ -21,10 +19,10 @@
 		{
 			if(jobsData.hasOwnProperty(jobName))
 			{
-				duckLogger.debug(jobName +' already in job queue');
+				ndLogger.debug(jobName +' already in job queue');
 				return;
 			}
-			duckClient.uiActions.startJob(jobName);
+			ndAngular.uiActions.startJob(jobName);
 		}
 		function getJobProgress(jobName)
 		{
@@ -56,11 +54,11 @@
 		}
 		function activate()
 		{
-			if(!duckClient.persistentData.hasOwnProperty('jobs'))
+			if(!ndAngualr.persistentData.hasOwnProperty('jobs'))
 			{
-				duckClient.persistentData.jobs={};
+				ndAngualr.persistentData.jobs={};
 			}
-			jobsData=duckClient.persistentData.jobs;
+			jobsData=ndAngualr.persistentData.jobs;
 			$rootScope.$on('JobProgress',function(event,data){
 				updateJobProgress(data);
 			});

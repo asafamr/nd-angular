@@ -1,12 +1,11 @@
-/* global angular */
-'use strict';
 (function (){
+	'use strict';
 	var myUrl = document.currentScript.src;
-	angular.module('duck-angular')
-		.directive('duckLoader', DuckLoaderDirective);
+	angular.module('ndAngular')
+		.directive('ndLoader', NDLoaderDirective);
 
-	DuckLoaderDirective.$inject=['duckClient'];
-	function DuckLoaderDirective(duckClient)
+	NDLoaderDirective.$inject=['ndAngular'];
+	function NDLoaderDirective(ndAngular)
 	{
 		return {
 			scope: {},
@@ -17,10 +16,10 @@
 
 	}
 
-	LoaderController.$inject=['duckPager','duckClient'];
-	function LoaderController(duckPager,duckClient)
+	LoaderController.$inject=['ndPager','ndAngular'];
+	function LoaderController(ndPager,ndAngular)
 	{
-		duckPager.show();
-		duckClient.goNextPage(); 
+		ndPager.show();
+		ndAngular.goNextPage();
 	}
 })();
