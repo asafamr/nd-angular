@@ -3,7 +3,13 @@
 
 	//var ndCoreReq=process.mainModule.exports.ndCoreReq;
 
-	angular.module('ndAngular',['ui.router','ui.bootstrap'])
+	angular.module('ndAngular',['ui.router','ui.bootstrap','ngSanitize','ngAnimate'])
+	/*.factory('$exceptionHandler', function() {
+  return function(exception, cause) {
+    exception.message += ' (caused by "' + cause + '")';
+    throw exception;
+  };
+})*/
 		.provider('ndAngular', NDAngularProvider);
 
 	var ndLogger=ndjs.getLogger();
@@ -71,11 +77,11 @@
 		.fail(function(err){ndLogger.error('getPages failed '+JSON.stringify(err.responseText));})
 		.then(function(pages)
 	{
-		ndPages=pages;
 		ndLogger.debug('bootstrapping angular');
 		angular.module('ndAngular')
-			.constant('ndPages',ndPages)
-			.constant('ndLogger',ndLogger);
+			.constant('ndPages',pages)
+			.constant('ndLogger',ndLogger)
+			.constant('ndUiActions',actions);
 			angular.resumeBootstrap();
 	});
 
@@ -85,22 +91,39 @@
 
 
 
-	NDAngularProvider.$inject=['$stateProvider','$urlRouterProvider'];
-	function NDAngularProvider($stateProvider,$urlRouterProvider)
+	NDAngularProvider.$inject=['$stateProvider','$urlRouterProvider','ndPages','ndUiActions'];
+	function NDAngularProvider($stateProvider,$urlRouterProvider,ndPages,ndUiActions)
 	{
 		var thisProvider=this;
 
 		thisProvider.$get=NDAngular;
 		activate();
 
-		ndAngular.$inject=['$state','ndUIActionsRegister','$interval','$injector'];
+		NDAngular.$inject=['$state','ndUIActionsRegister','$timeout','$injector'];
 		function NDAngular($state,ndUIActionsRegister,$timeout,$injector)
 		{
 			var me=this;
-			ndLogger.debug('creating ndjs client provider service');
+
 			me.uiActions={};
-			ndUIActionsRegister.registerUiActions(ndUiActions,ndjs.callUiAction,me.uiActions);
-			$timeout(function(){$injector.get('ndEvents');});
+			me.window={minimize:minimize,close:close};
+			activate();
+
+
+			function activate()
+			{
+				ndLogger.debug('creating ndjs client provider service');
+				if(typeof require !== 'undefined')	setTimeout(function(){require('nw.gui').Window.get().show();},0);
+				$timeout(function(){$injector.get('ndEvents');});
+				ndUIActionsRegister.registerUiActions(ndUiActions,ndjs.callUiAction,me.uiActions);
+			}
+	    function minimize()
+	    {
+
+	    }
+	    function close()
+	    {
+
+	    }
 			return me;
 		}
 
@@ -116,7 +139,7 @@
 				}
 				else
 				{
-					dat.template = '<div nd-'+type+' settings="pageVm.settings"/>';
+					dat.template = '<div nd-page-'+type+' settings="pageVm.settings"/>';
 				}
 				dat.controller=function ()
 				{

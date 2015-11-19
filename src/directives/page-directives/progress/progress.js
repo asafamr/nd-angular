@@ -2,7 +2,7 @@
 	'use strict';
 	var myUrl = document.currentScript.src;
 	angular.module('ndAngular')
-		.directive('ndProgress', NDProgressDirective);
+		.directive('ndPageProgress', NDProgressDirective);
 
 	NDProgressDirective.$inject=[];
 	function NDProgressDirective()

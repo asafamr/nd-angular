@@ -5,8 +5,8 @@
 		.module('ndAngular')
 		.factory('ndUIActionsRegister', NDUIActionsRegister );
 
-	NDUIActionsRegister.$inject=['$q'];
-	function NDUIActionsRegister($q)
+	NDUIActionsRegister.$inject=['$q','ndLogger'];
+	function NDUIActionsRegister($q,ndLogger)
 	{
 
 		return {
@@ -18,20 +18,12 @@
 		{
 			return function(args)
 			{
-				return $q(function(resolve, reject) {
-					callUiActionCallback(
-						uiActionName,args,function(err,succ)
-						{
-							if(err)
-							{
-								//TODO:log error
-								reject(err);
-								return;
-							}
-							resolve(succ);
-							return;
-						});
-				});
+				return $q.when(callUiActionCallback(uiActionName,args)).
+				catch(function(err)
+			{
+				ndLogger.error(uiActionName+' failed: '+err.responseText);
+				return $q.reject();
+			});
 			};
 		}
 
@@ -42,14 +34,12 @@
 			for(var actionName in uiActionsMeta){
 				(function(){//create a unique scope for each iteration
 					var action = uiActionsMeta[actionName];
-					var actionFunc = getCallUiActionClosure(action.name,callUiActionCallback);
-					var paramArrayStr = action.paramNames.join(',');
-					var functionStr = '(function ui_action_'+action.name+'('+paramArrayStr+
+					var actionFunc = getCallUiActionClosure(actionName,callUiActionCallback);
+					var paramArrayStr = action.join(',');
+					var functionStr = '(function ui_action_'+actionName+'('+paramArrayStr+
 							'){return actionFunc(arguments);})';
-					/*eslint evil: true */
-					to[action.name]=eval(functionStr); // eslint-disable-line no-eval
-					/*jslint evil: false */
-				})();}
+					to[actionName]=eval(functionStr); // jshint ignore:line
+				})();}// jshint ignore:line
 		}
 	}
 })();

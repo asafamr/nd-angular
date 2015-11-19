@@ -3,10 +3,10 @@
 (function() {
 	'use strict';
 	angular.module('ndAngular')
-		.controller('ndFolderSelectController',NDFolderSelect);
+		.controller('NDDirSelectController',NDDirSelectController);
 
-	NDFolderSelect.$inject=['ndAngular','$log','$scope'];
-	function NDFolderSelect(ndAngular,$log,$scope)
+	NDDirSelectController.$inject=['ndAngular','$log','$scope'];
+	function NDDirSelectController(ndAngular,$log,$scope)
 	{
 		var vm = this;
 		vm.dir=vm.dir;//bound outside
@@ -25,18 +25,14 @@
 		}
 		function startChoose(event)
 		{
-			//element.show();
-			//element.focus();
 			event.target.children[0].click();
-			//element.hide();
 		}
 		function activate ()
 		{
-			ndAngular.uiActions.fsGetWorkingDir().
+			ndAngular.uiActions.getWorkingDir().
 				then(function(baseDir)
 				{
 					vm.dir=baseDir;
-					//return ndAngular.uiActions.fsGetDirTree(baseDir);
 				});
 
 

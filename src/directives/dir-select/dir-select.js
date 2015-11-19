@@ -1,13 +1,15 @@
+
+
 (function (){
 	'use strict';
-
 	var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
-	angular.module('ndAngular').directive('ndDirectory', function() {
-
+	angular.module('ndAngular').directive('ndDirSelect', function() {
 		return {
-			scope: {settings:'='},
-			bindToController: true,
+			scope: {
+				dir: '=dir'
+			},
+			bindToController:true,
 			controllerAs:'vm',
-			controller: 'ndDirectoryController',
+			controller: 'NDDirSelectController',
 			templateUrl: myUrl.replace('.js','.html')
 		};});})();

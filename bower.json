@@ -7,7 +7,9 @@
   "description": "NDJS angular front end",
   "dependencies": {
     "angular": "~1.4",
-
+    "angular-animate": "~1.4.7",
+    "angular-sanitize": "~1.4.7",
+    "octicons": "*"
   },
   "main": [
     "./dist/nd-angualr.css",

@@ -23,6 +23,7 @@
 			ndAngular.uiActions.getNotificationsFromIdx(lastIdx).then(
 				function(notificationsArray)
 				{
+					if(notificationsArray.length===0)return;
 					lastIdx+=notificationsArray.length;
 					angular.forEach(notificationsArray,function(val,idx)
 													{
@@ -37,7 +38,7 @@
 		}
 		function activate()
 		{
-			$interval(checkForEvents,200);
+			$interval(checkForEvents,200,0,false);
 		}
 	}
 })();

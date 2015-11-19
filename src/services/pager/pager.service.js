@@ -8,25 +8,37 @@
 	NDPager.$inject=['ndPages','ndLogger','$state'];
 	function NDPager(ndPages,ndLogger,$state)
 	{
-		var currenPageIdx=0;
-		var isVisible=false;
-		var nextEnabled=true;
+		var currenPageNumber=0;
+		var minimalPageNumber=0;
+		var nextIsEnabled=true;
+		var backIsEnabled=true;
 
 		var changeCallbacks=[];
+		activate();
 		return {
-			show:	show,
-			hide: hide,
-			getVisible: function(){return isVisible;},
-			getPageIdx:function(){return currenPageIdx;},
-			isBackEnabled:isBackEnabled,
-			isNextEnabled:isNextEnabled,
+			nextEnabled:nextEnabled,
+			backEnabled:backEnabled,
+			getPageNumber:function(){return currenPageNumber;},
 			gotoPageNumber:gotoPageNumber,
 			goNextPage:goNextPage,
 			goBackPage:goBackPage,
-			setNextEnabled:setNextEnabled,
-			registerChangeCallback: registerChangeCallback
+			noBackFromHere:function(){minimalPage=currenPageNumber;}
 		};
 
+		function activate()
+		{
+			if($state && $state.current)
+			{
+				angular.forEach(ndPages,function(page,idx)
+				{
+					if(page.name===$state.current.name)
+					{
+						currenPageNumber=idx;
+					}
+				});
+			}
+
+		}
 		function setNextEnabled(isNextEnabled)
 		{
 			nextEnabled=isNextEnabled;
@@ -37,60 +49,52 @@
 			if(pageNum>=0 && pageNum <ndPages.length)
 			{
 				ndLogger.debug('going to page '+pageNum);
+				nextIsEnabled=backIsEnabled=true;
 				$state.go(ndPages[pageNum].name);
-				emitChange();
+			}
+			else {
+				ndLogger.error('could not go to page '+pageNum);
 			}
 
 		}
-		function isBackEnabled()
+		function backEnabled(setEnabled)
 		{
-			return currenPageIdx>0;
+			if(currenPageNumber<=minimalPageNumber)
+			{
+				return false;
+			}
+			if(angular.isDefined(setEnabled))
+			{
+				backIsEnabled=setEnabled;
+			}
+			return backIsEnabled;
+		}
+		function nextEnabled(setEnabled)
+		{
+			if(currenPageNumber+1>ndPages.length)
+			{
+				return false;
+			}
+			if(angular.isDefined(setEnabled))
+			{
+				nextIsEnabled=setEnabled;
+			}
+			return nextIsEnabled;
 		}
 
-		function isNextEnabled()
-		{
-			return nextEnabled && currenPageIdx+1<ndPages.length;
-		}
 
 		function goNextPage()
 		{
-			if(isNextEnabled())
-			{
-				currenPageIdx+=1;
-				gotoPageNumber(currenPageIdx);
-			}
+				currenPageNumber+=1;
+				gotoPageNumber(currenPageNumber);
 		}
 
 		function goBackPage()
 		{
-			if(this.isBackEnabled())
-			{
-				currenPageIdx-=1;
-				gotoPageNumber(currenPageIdx);
-			}
+				currenPageNumber-=1;
+				gotoPageNumber(currenPageNumber);
 		}
 
-		function emitChange()
-		{
-			angular.forEach(changeCallbacks, function(callback, idx) {
-				void idx;
-				callback(isVisible,currenPageIdx);
-			});
-		}
-		function show()
-		{
-			isVisible=true;
-			emitChange();
-		}
-		function hide()
-		{
-			isVisible=false;
-			emitChange();
-		}
-		function registerChangeCallback(callback)
-		{
-			changeCallbacks.push(callback);
-		}
 
 
 	}
