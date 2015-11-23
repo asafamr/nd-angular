@@ -3,7 +3,7 @@
 (function (){
 	'use strict';
 	var myUrl = document.currentScript.src;
-	angular.module('ndAngular').directive('ndDirSelect', function() {
+	angular.module('ndAngular').directive('ndJobProgress', function() {
 		return {
 			scope: {
 				dir: '=',
@@ -12,7 +12,8 @@
 				buttonText:'@'
 			},
 			bindToController:true,
+      transclude: true,
 			controllerAs:'vm',
-			controller: 'NDDirSelectController',
-			templateUrl: myUrl.replace('.js','.html')
+			controller: 'NDJobProgressController',
+			template: '<ng-transclude></ng-transclude>'
 		};});})();

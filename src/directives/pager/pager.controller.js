@@ -3,8 +3,8 @@
 	angular.module('ndAngular')
 		.controller('PagerController',PagerController);
 
-	PagerController.$inject=['ndAngular','ndPager','$scope'];
-	function PagerController(ndAngular,ndPager,$scope)
+	PagerController.$inject=['ndPager','$scope'];
+	function PagerController(ndPager,$scope)
 	{
 		var vm = this;
 		vm.a=0;

@@ -5,8 +5,8 @@
 		.module('ndAngular')
 		.factory('ndJobManager', NDJobManager );
 
-	NDJobManager.$inject=['ndEvents','ndLogger','$rootScope','ndAngular'];
-	function NDJobManager(ndEvents,ndLogger,$rootScope,ndAngular)
+	NDJobManager.$inject=['ndEvents','ndLogger','$rootScope','ndActions'];
+	function NDJobManager(ndEvents,ndLogger,$rootScope,ndActions)
 	{
 		var jobsData;
 
@@ -22,7 +22,7 @@
 				ndLogger.debug(jobName +' already in job queue');
 				return;
 			}
-			ndAngular.uiActions.startJob(jobName);
+			ndActions.startNamedJob(jobName);
 		}
 		function getJobProgress(jobName)
 		{
@@ -30,7 +30,7 @@
 			{
 				return jobsData[jobName];
 			}
-			return null;
+			return 0;
 		}
 		function updateJobProgress(data)
 		{
@@ -54,11 +54,11 @@
 		}
 		function activate()
 		{
-			if(!ndAngualr.persistentData.hasOwnProperty('jobs'))
+			if(!ndjs.getPersistent('jobs'))
 			{
-				ndAngualr.persistentData.jobs={};
+				ndjs.setPersistent('jobs',{});
 			}
-			jobsData=ndAngualr.persistentData.jobs;
+			jobsData=ndjs.getPersistent('jobs');
 			$rootScope.$on('JobProgress',function(event,data){
 				updateJobProgress(data);
 			});

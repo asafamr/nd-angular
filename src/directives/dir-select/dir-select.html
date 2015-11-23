@@ -1,5 +1,5 @@
 
-<input id="nd_dir_select_input" ng-model="vm.dir" ng-model-options="{ debounce: 1000 }" />
-<div id="nd_dir_select_button" onclick="this.children[0].click()">Choose
-	<input  type="file" nwdirectory onchange="angular.element(this).scope().vm.dialogPicked(this)" ng-hide="true" />
+<input id="nd_dir_select_input" ng-model="vm.dir" ng-model-options="{ debounce: 1000 }" class="{{vm.inputClass}}" />
+<div class="{{vm.buttonClass}}" id="nd_dir_select_button" onclick="angular.element(this).scope().vm.startChoose(this.children[0])">{{vm.buttonText}}
+	<input  type="file" nwdirectory onchange="angular.element(this).scope().vm.dialogPicked(this)" style="display:none" />
 </div>

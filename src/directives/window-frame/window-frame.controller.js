@@ -5,8 +5,8 @@
 	angular.module('ndAngular')
 		.controller('NDWindowFrameController',NDWindowFrame);
 
-	NDWindowFrame.$inject=['ndAngular','$log','$scope'];
-	function NDWindowFrame(ndAngular,$log,$scope)
+	NDWindowFrame.$inject=['$log','$scope'];
+	function NDWindowFrame($log,$scope)
 	{
 		var vm = this;
 		vm.close=close;//bound outside

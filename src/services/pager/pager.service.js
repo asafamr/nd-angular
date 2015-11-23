@@ -27,16 +27,19 @@
 
 		function activate()
 		{
-			if($state && $state.current)
-			{
+
+
 				angular.forEach(ndPages,function(page,idx)
 				{
-					if(page.name===$state.current.name)
+					var pageAddress='#/page/'+page;
+					//if windows location ends with this page name
+					//$state is async and problematic so we use window.location
+					if(window.location.hash.indexOf(pageAddress) === 0)
 					{
 						currenPageNumber=idx;
 					}
-				});
-			}
+
+			});
 
 		}
 		function setNextEnabled(isNextEnabled)
@@ -50,7 +53,7 @@
 			{
 				ndLogger.debug('going to page '+pageNum);
 				nextIsEnabled=backIsEnabled=true;
-				$state.go(ndPages[pageNum].name);
+				$state.go(ndPages[pageNum]);
 			}
 			else {
 				ndLogger.error('could not go to page '+pageNum);

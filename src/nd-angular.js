@@ -1,17 +1,16 @@
 (function(){
 'use strict';
 
-	//var ndCoreReq=process.mainModule.exports.ndCoreReq;
 
 	angular.module('ndAngular',['ui.router','ui.bootstrap','ngSanitize','ngAnimate'])
-	/*.factory('$exceptionHandler', function() {
-  return function(exception, cause) {
-    exception.message += ' (caused by "' + cause + '")';
-    throw exception;
-  };
-})*/
-		.provider('ndAngular', NDAngularProvider);
-
+		.config( NDAngularConfig)
+		.run(NDAngularRun);
+		/*.factory('$exceptionHandler', function() {
+	  return function(exception, cause) {
+	    exception.message += ' (caused by "' + cause + '")';
+	    throw exception;
+	  };
+	})*/
 	var ndLogger=ndjs.getLogger();
 	//lazy injection of resumeBootstrap in this tick - wait for it
 	//setTimeout(recheckLoaded,0);// eslint-disable-line angular/ng_timeout_service
@@ -81,7 +80,7 @@
 		angular.module('ndAngular')
 			.constant('ndPages',pages)
 			.constant('ndLogger',ndLogger)
-			.constant('ndUiActions',actions);
+			.constant('ndUiActionsMeta',actions);
 			angular.resumeBootstrap();
 	});
 
@@ -91,76 +90,33 @@
 
 
 
-	NDAngularProvider.$inject=['$stateProvider','$urlRouterProvider','ndPages','ndUiActions'];
-	function NDAngularProvider($stateProvider,$urlRouterProvider,ndPages,ndUiActions)
+	NDAngularConfig.$inject=['$stateProvider','$urlRouterProvider','ndPages'];
+	function NDAngularConfig($stateProvider,$urlRouterProvider,ndPages)
 	{
-		var thisProvider=this;
 
-		thisProvider.$get=NDAngular;
 		activate();
-
-		NDAngular.$inject=['$state','ndUIActionsRegister','$timeout','$injector'];
-		function NDAngular($state,ndUIActionsRegister,$timeout,$injector)
-		{
-			var me=this;
-
-			me.uiActions={};
-			me.window={minimize:minimize,close:close};
-			activate();
-
-
-			function activate()
-			{
-				ndLogger.debug('creating ndjs client provider service');
-				if(typeof require !== 'undefined')	setTimeout(function(){require('nw.gui').Window.get().show();},0);
-				$timeout(function(){$injector.get('ndEvents');});
-				ndUIActionsRegister.registerUiActions(ndUiActions,ndjs.callUiAction,me.uiActions);
-			}
-	    function minimize()
-	    {
-
-	    }
-	    function close()
-	    {
-
-	    }
-			return me;
-		}
 
 		function activate()
 		{
 			ndLogger.debug('activating ndjs client provider');
-			function addPage(name,type,settings)
+			function addPage(name)
 			{
-				var dat={url:'/page/' + name,controllerAs:'pageVm'};
-				if(type === 'custom')
-				{
-					dat.templateUrl = 'views/' + name + '/'+name + '.html';
-				}
-				else
-				{
-					dat.template = '<div nd-page-'+type+' settings="pageVm.settings"/>';
-				}
-				dat.controller=function ()
-				{
-					this.settings=settings;
-				};
+				var dat={url:'/page/' + name};
+				dat.templateUrl = 'views/' + name + '/'+name + '.html';
 				$stateProvider.state(name,dat);
-
 			}
-
 			angular.forEach(ndPages, function(value, idx){
 				void idx;
-				addPage(value.name,value.type,value.settings);
+				addPage(value);
 			});
-			$urlRouterProvider.otherwise('/page/'+ndPages[0].name);
+			$urlRouterProvider.otherwise('/page/'+ndPages[0]);
 			ndLogger.debug('pages set');
 
 		}
-
-
-
-
-
+	}
+NDAngularRun.$inject=['ndEvents'];
+	function NDAngularRun(ndEvents)
+	{
+		//just initilize ijected modules
 	}
 })();

@@ -5,8 +5,8 @@
 	angular.module('ndAngular')
 		.controller('NDDirSelectController',NDDirSelectController);
 
-	NDDirSelectController.$inject=['ndAngular','$log','$scope'];
-	function NDDirSelectController(ndAngular,$log,$scope)
+	NDDirSelectController.$inject=['ndActions','$log','$scope'];
+	function NDDirSelectController(ndActions,$log,$scope)
 	{
 		var vm = this;
 		vm.dir=vm.dir;//bound outside
@@ -17,23 +17,25 @@
 
 		function dialogPicked(element)//from DOM - not angular
 		{
+
 			if(element && element.files && element.files[0])
 			{
 				vm.dir=element.files[0].path;
 				$scope.$apply();// eslint-disable-line angular/ng_controller_as
 			}
 		}
-		function startChoose(event)
+		function startChoose(toClick)
 		{
-			event.target.children[0].click();
+			if(typeof require ==='undefined')
+			{
+				window.alert('directory selection disabled in browser debug mode');
+				return;
+			}
+			toClick.click();
 		}
 		function activate ()
 		{
-			ndAngular.uiActions.getWorkingDir().
-				then(function(baseDir)
-				{
-					vm.dir=baseDir;
-				});
+
 
 
 		}

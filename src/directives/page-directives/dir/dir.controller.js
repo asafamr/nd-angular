@@ -5,8 +5,8 @@
 	angular.module('ndAngular')
 		.controller('NDPageDirController',DirectoryController);
 
-	DirectoryController.$inject=['ndAngular','$scope','$q'];
-	function DirectoryController(ndAngular,$scope,$q)
+	DirectoryController.$inject=['ndActions','$scope','$q'];
+	function DirectoryController(ndActions,$scope,$q)
 	{
 		var vm = this;
 		vm.dir='';
@@ -23,7 +23,7 @@
 			$scope.$watch(function () {
 				return vm.dir;
 			},function(){
-				sendingSettingPromise=sendingSettingPromise.then(function(){ndAngular.uiActions.setUserSettings(settingName,vm.dir);});
+				sendingSettingPromise=sendingSettingPromise.then(function(){ndActions.setUserSettings(settingName,vm.dir);});
 										});
 
 		}

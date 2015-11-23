@@ -1,18 +1,20 @@
 (function (){
 	'use strict';
-	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
 		.module('ndAngular')
-		.factory('ndUIActionsRegister', NDUIActionsRegister );
+		.factory('ndActions', NDActions );
 
-	NDUIActionsRegister.$inject=['$q','ndLogger'];
-	function NDUIActionsRegister($q,ndLogger)
+	NDActions.$inject=['$q','ndLogger','ndUiActionsMeta'];
+	function NDActions($q,ndLogger,ndUiActionsMeta)
 	{
+    var ndActionsModule={};
+    activate();
+		return ndActionsModule;
 
-		return {
-			registerUiActions	:	registerUiActions
-		};
-
+    function activate()
+    {
+      registerUiActions(ndUiActionsMeta,ndjs.callUiAction,ndActionsModule);
+    }
 
 		function getCallUiActionClosure(uiActionName,callUiActionCallback)
 		{

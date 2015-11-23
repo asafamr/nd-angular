@@ -5,8 +5,8 @@
 		.module('ndAngular')
 		.factory('ndEvents', NDEvents );
 
-	NDEvents.$inject=['$rootScope','$interval','ndLogger','ndAngular'];
-	function NDEvents($rootScope,$interval,ndLogger,ndAngular)
+	NDEvents.$inject=['$rootScope','$interval','ndLogger','ndActions'];
+	function NDEvents($rootScope,$interval,ndLogger,ndActions)
 	{
 		var lastIdx=0;
 		var readyForCall=true;
@@ -20,7 +20,7 @@
 			if(readyForCall)
 			{
 				readyForCall=false;
-			ndAngular.uiActions.getNotificationsFromIdx(lastIdx).then(
+			ndActions.getNotificationsFromIdx(lastIdx).then(
 				function(notificationsArray)
 				{
 					if(notificationsArray.length===0)return;
