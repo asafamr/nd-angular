@@ -22,7 +22,7 @@
 			gotoPageNumber:gotoPageNumber,
 			goNextPage:goNextPage,
 			goBackPage:goBackPage,
-			noBackFromHere:function(){minimalPage=currenPageNumber;}
+			preventBackFromHere:function(){minimalPageNumber=currenPageNumber;}
 		};
 
 		function activate()

@@ -46,7 +46,7 @@
 				else {
 					setTimeout(recheckLoaded,100);
 				}
-			}).fail(function(err)
+			}).catch(function(err)
 			{
 				ndLogger.error('ajax hasFinishedLoading failed '+JSON.stringify(arguments));
 			});
@@ -63,7 +63,7 @@
 				else {
 					setTimeout(recheckLoaded,100);
 				}
-			}).fail(function(err)
+			}).catch(function(err)
 			{
 				ndLogger.error('ajax getUiActions failed '+JSON.stringify(err.responseText));
 			});
@@ -73,7 +73,7 @@
 	function bootstrapNdjs(actions)
 	{
 		ndjs.callUiAction('getPages')
-		.fail(function(err){ndLogger.error('getPages failed '+JSON.stringify(err.responseText));})
+		.catch(function(err){ndLogger.error('getPages failed '+JSON.stringify(err.responseText));})
 		.then(function(pages)
 	{
 		ndLogger.debug('bootstrapping angular');
@@ -117,6 +117,6 @@
 NDAngularRun.$inject=['ndEvents'];
 	function NDAngularRun(ndEvents)
 	{
-		//just initilize ijected modules
+		//just initilize injected modules
 	}
 })();

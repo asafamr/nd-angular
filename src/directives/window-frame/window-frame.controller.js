@@ -5,47 +5,25 @@
 	angular.module('ndAngular')
 		.controller('NDWindowFrameController',NDWindowFrame);
 
-	NDWindowFrame.$inject=['$log','$scope'];
-	function NDWindowFrame($log,$scope)
+	NDWindowFrame.$inject=['$log','$scope','ndWindow'];
+	function NDWindowFrame($log,$scope,ndWindow)
 	{
 		var vm = this;
-		vm.close=close;//bound outside
-		vm.showMin=typeof vm.showMin === 'undefined' || vm.showMin;
-		vm.showToggleFullscreen=typeof vm.showToggleFullscreen === 'undefined' || vm.showToggleFullscreen;
-		vm.showClose=typeof vm.showClose === 'undefined' || vm.showClose;
-		vm.minimize=minimize;
-		vm.fullscreenToggle=fullscreenToggle;
+		vm.close=ndWindow.close;
+		//these 3 come from directive:
+		vm.showMin=vm.showMin;
+		vm.showToggleFullscreen=vm.showToggleFullscreen;
+		vm.showClose=	vm.showClose;
+		vm.minimize=ndWindow.minimize;
+		vm.fullscreenToggle=ndWindow.fullscreenToggle;
 		activate();
-		function minimize()
-		{
-			if(typeof require !== 'undefined')
-				{
-				var gui = require('nw.gui');
-				var win = gui.Window.get();
-				win.minimize();
-			}
-		}
-		function fullscreenToggle()
-		{
-			if(typeof require !== 'undefined'){
-			var gui = require('nw.gui');
-				var win = gui.Window.get();
-				win.toggleFullscreen();
-			}
-		}
-		function close()
-		{
-			if(typeof require !== 'undefined'){
-			var gui = require('nw.gui');
-				var win = gui.Window.get();
-				win.close();
-			}
-		}
+
+
 		function activate ()
 		{
-
-
-
+			if(typeof vm.showMin === 'undefined')vm.showMin=true;
+			if(typeof vm.showToggleFullscreen === 'undefined')vm.showToggleFullscreen=true;
+			if(typeof vm.showClose === 'undefined')vm.showClose=true;
 		}
 
 

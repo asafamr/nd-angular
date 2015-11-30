@@ -26,13 +26,12 @@
 					if(notificationsArray.length===0)return;
 					lastIdx+=notificationsArray.length;
 					angular.forEach(notificationsArray,function(val,idx)
-													{
+					{
 						void idx;
-						$rootScope.$emit(val.name,val);
+						$rootScope.$broadcast(val.name,val);
 						ndLogger.debug('sending event ' +angular.toJson(val));
 					});
-					readyForCall=true;
-				});
+				}).finally(function(){readyForCall=true;});
 			}
 
 		}

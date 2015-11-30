@@ -8,27 +8,28 @@
 	NDJobManager.$inject=['ndEvents','ndLogger','$rootScope','ndActions'];
 	function NDJobManager(ndEvents,ndLogger,$rootScope,ndActions)
 	{
-		var jobsData;
+		var jobsProgress={};
 
 		activate();
 		return {
 			getJobProgress:	getJobProgress,
 			startJob: startJob
 		};
-		function startJob(jobName)
+		function startJob(jobName,force)
 		{
-			if(jobsData.hasOwnProperty(jobName))
+			if(typeof force === 'undefined'){force=false;}
+			if(jobsProgress.hasOwnProperty(jobName))
 			{
-				ndLogger.debug(jobName +' already in job queue');
+				ndLogger.warn(jobName +' already in job queue');
 				return;
 			}
-			ndActions.startNamedJob(jobName);
+			ndActions.startNamedJob(jobName,force);
 		}
 		function getJobProgress(jobName)
 		{
-			if(jobsData.hasOwnProperty(jobName))
+			if(jobsProgress.hasOwnProperty(jobName))
 			{
-				return jobsData[jobName];
+				return jobsProgress[jobName];
 			}
 			return 0;
 		}
@@ -36,36 +37,44 @@
 		{
 			var jobName=data.value.jobName;
 
-			if(jobsData.hasOwnProperty(jobName) && jobsData[jobName].progress===100)
+			if(jobsProgress.hasOwnProperty(jobName) && jobsProgress[jobName].progress===1)
 			{
 				return;
 			}
 			else
 			{
-				jobsData[jobName]={progress:parseInt(data.value.progress*100),
-													 estimate:parseInt(data.value.estimateLeft)};
+				jobsProgress[jobName]=data.value.progress;
 			}
 		}
-		function updateJobDone(data)
+		function jobRetry(data)
 		{
-			var jobName=data.value.jobName;
-			jobsData[jobName]={progress:100,
-												 estimate:0};
+			window.alert('job asked retry - we could retry,ignore or abort'+JSON.stringify(data));
 		}
+		function jobError(data)
+		{
+			window.alert('job unknown error'+JSON.stringify(data));
+		}
+
+
 		function activate()
 		{
 			if(!ndjs.getPersistent('jobs'))
 			{
 				ndjs.setPersistent('jobs',{});
 			}
-			jobsData=ndjs.getPersistent('jobs');
-			$rootScope.$on('JobProgress',function(event,data){
+			//jobsData=ndjs.getPersistent('jobs');
+			$rootScope.$on('jobstatus',function(event,data){
 				updateJobProgress(data);
 			});
 
-			$rootScope.$on('JobDone',function(event,data){
-				updateJobDone(data);
+			$rootScope.$on('jobretry',function(event,data){
+				jobRetry(data);
 			});
+
+			$rootScope.$on('joberror',function(event,data){
+				jobError(data);
+			});
+
 		}
 
 
