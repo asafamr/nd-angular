@@ -1,3 +1,9 @@
+/**
+job manager
+@name ndJobManager service
+@description starts, queries ndjs jobs progress
+**/
+
 (function (){
 	'use strict';
 	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
@@ -15,6 +21,11 @@
 			getJobProgress:	getJobProgress,
 			startJob: startJob
 		};
+		/**
+		* start a job by name
+		* @param {String} jobName name of the job to start
+		* @param {Boolean} force start even it has already started before
+		**/
 		function startJob(jobName,force)
 		{
 			if(typeof force === 'undefined'){force=false;}
@@ -25,6 +36,12 @@
 			}
 			ndActions.startNamedJob(jobName,force);
 		}
+		/**
+		* @name getJobProgress
+		* @description gets a job progress
+		* @param {String} jobName name of the job to query
+		* @return {Number} job progress between 0 and 1 (1=completed)
+		**/
 		function getJobProgress(jobName)
 		{
 			if(jobsProgress.hasOwnProperty(jobName))

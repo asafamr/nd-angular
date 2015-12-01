@@ -16,7 +16,7 @@
     "url": "https://github.com/asafamr/nd-angular/issues"
   },
   "devDependencies": {
-    "dox": "~0.4.4",
+    "dox": "^0.8.0",
     "grunt": "~0.4.0",
     "grunt-angular-templates": "^0.5.7",
     "grunt-contrib-concat": "*",
@@ -30,7 +30,11 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-phantomcss-gitdiff": "0.0.7",
     "grunt-resemble-cli": "0.0.8",
-    "grunt-text-replace": "~0.3.11"
+    "grunt-simple-dox": "0.0.2",
+    "grunt-text-replace": "~0.3.11",
+    "html": "0.0.10",
+    "lodash": "^3.10.1",
+    "lodash.template": "^3.6.2"
   },
   "homepage": "https://github.com/asafamr/nd-angular#readme"
 }

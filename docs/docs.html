@@ -1,0 +1,207 @@
+<div class="dox-modules">
+    <div class="dox-module">
+        <div class="dox-name">ndAngular</div>
+        <div class="dox-description">ndAngular module includes directives and services - the NDJS framework
+            frontend note:the module wait for NDJS backend to be ready and then bootstraps
+            angular and registers all ndjs pages as urls</div>
+    </div>
+</div>
+<div class="dox-services">
+    <div class="dox-service">
+        <div class="dox-name">ndJobManager</div>
+        <div class="dox-description">starts, queries ndjs jobs progress</div>
+        <div class="dox-methods">
+            <div class="dox-method">
+                <div class="dox-name">startJob</div>
+                <div class="dox-params">
+                    <div class="dox-param">
+                        <div class="dox-name">jobName</div>
+                        <div class="dox-type">String</div>
+                        <div class="dox-description">name of the job to start</div>
+                    </div>
+                    <div class="dox-param">
+                        <div class="dox-name">force</div>
+                        <div class="dox-type">Boolean</div>
+                        <div class="dox-description">start even it has already started before</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">getJobProgress</div>
+                <div class="dox-description">gets a job progress</div>
+                <div class="dox-params">
+                    <div class="dox-param">
+                        <div class="dox-name">jobName</div>
+                        <div class="dox-type">String</div>
+                        <div class="dox-description">name of the job to query</div>
+                    </div>
+                </div>
+                <div class="dox-return">{Number} job progress between 0 and 1 (1=completed)</div>
+            </div>
+        </div>
+    </div>
+    <div class="dox-service">
+        <div class="dox-name">ndPager</div>
+        <div class="dox-description">manages ndjs pages changes</div>
+        <div class="dox-methods">
+            <div class="dox-method">
+                <div class="dox-name">gotoPageNumber</div>
+                <div class="dox-description">goto to page number</div>
+                <div class="dox-params">
+                    <div class="dox-param">
+                        <div class="dox-name">pageNum</div>
+                        <div class="dox-type">Number</div>
+                        <div class="dox-description">target page number</div>
+                    </div>
+                </div>
+                <div class="dox-example">gotoPageNumber(5)</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">backEnabled</div>
+                <div class="dox-description">queries or sets if back option enabled</div>
+                <div class="dox-params">
+                    <div class="dox-param">
+                        <div class="dox-name">setEnabled</div>
+                        <div class="dox-type">Boolean</div>
+                        <div class="dox-description">(optional) enables/disables go back option</div>
+                    </div>
+                </div>
+                <div class="dox-return">{Number} returns if back option is enabled</div>
+                <div class="dox-example">backEnabled() backEnabled(false)</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">nextEnabled</div>
+                <div class="dox-description">queries or sets if next option enabled</div>
+                <div class="dox-params">
+                    <div class="dox-param">
+                        <div class="dox-name">setEnabled</div>
+                        <div class="dox-type">Boolean</div>
+                        <div class="dox-description">(optional) enables/disables go next option</div>
+                    </div>
+                </div>
+                <div class="dox-return">{Number} returns if next option is enabled</div>
+                <div class="dox-example">nextEnabled() nextEnabled(false)</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">goNextPage</div>
+                <div class="dox-description">go to the next page</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">goBackPage</div>
+                <div class="dox-description">go back to the last page</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">getPageNumber</div>
+                <div class="dox-description">get page number</div>
+                <div class="dox-return">{Number} page number</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">preventBackFromHere</div>
+                <div class="dox-description">set back disabled from this page (for example, if you finished a job and
+                    want to prevent going back to its configuration page)</div>
+            </div>
+        </div>
+    </div>
+    <div class="dox-service">
+        <div class="dox-name">ndActions</div>
+        <div class="dox-description">interface for ui actions registered from the NDJS backend. Actions are
+            injected to this service as native functions that return a promise</div>
+    </div>
+    <div class="dox-service">
+        <div class="dox-name">ndEvents</div>
+        <div class="dox-description">Handles notification pushed from the backend to the UI. Uses angular brodacst
+            to send events. check the job manager for events handling</div>
+    </div>
+    <div class="dox-service">
+        <div class="dox-name">ndWindow</div>
+        <div class="dox-description">handles winodow minimization, maximization and close</div>
+        <div class="dox-methods">
+            <div class="dox-method">
+                <div class="dox-name">close</div>
+                <div class="dox-description">closes the window. on browser debug mode does nothing</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">minimize</div>
+                <div class="dox-description">minimize the window. on browser debug mode does nothing</div>
+            </div>
+            <div class="dox-method">
+                <div class="dox-name">toggleFullscreen</div>
+                <div class="dox-description">toggle window maximization. on browser debug mode does nothing</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="dox-directives">
+    <div class="dox-directive">
+        <div class="dox-name">ndDirSelect</div>
+        <div class="dox-description">directory selection &lt;input&gt;- consists of a text input and a button
+            that opens a pick dialog</div>
+        <div class="dox-params">
+            <div class="dox-param">
+                <div class="dox-name">dir</div>
+                <div class="dox-type">Object</div>
+                <div class="dox-description">two way bound to dir selected</div>
+            </div>
+            <div class="dox-param">
+                <div class="dox-name">inputClass</div>
+                <div class="dox-type">String</div>
+                <div class="dox-description">css class for the &lt;input&gt; text field</div>
+            </div>
+            <div class="dox-param">
+                <div class="dox-name">buttonClass</div>
+                <div class="dox-type">String</div>
+                <div class="dox-description">css class for the select button</div>
+            </div>
+            <div class="dox-param">
+                <div class="dox-name">buttonText</div>
+                <div class="dox-type">String</div>
+                <div class="dox-description">button text</div>
+            </div>
+        </div>
+        <div class="dox-example">&lt;nd-dir-select dir=&quot;vm.selectedDir&quot; input-class=&quot;dir-sel-text-1&quot;
+            button-class=&quot;dir-sel-text-1&quot; button-text=&quot;Choose...&quot;&gt;</div>
+    </div>
+    <div class="dox-directive">
+        <div class="dox-name">ndPager</div>
+        <div class="dox-description">pager with next and back button - sends commands to the pager service</div>
+        <div
+        class="dox-params">
+            <div class="dox-param">
+                <div class="dox-name">nextText</div>
+                <div class="dox-type">String</div>
+                <div class="dox-description">html for the next button content</div>
+            </div>
+            <div class="dox-param">
+                <div class="dox-name">backText</div>
+                <div class="dox-type">String</div>
+                <div class="dox-description">html for the back button content</div>
+            </div>
+    </div>
+    <div class="dox-example">&lt;nd-pager next-text=&quot;continue&quot; back-text=&quot;back&quot;&gt;</div>
+</div>
+<div class="dox-directive">
+    <div class="dox-name">ndWindowFrame</div>
+    <div class="dox-description">has 3 buttons that sends events to the window service - minimize, maximize
+        toggleand close</div>
+    <div class="dox-params">
+        <div class="dox-param">
+            <div class="dox-name">showMin</div>
+            <div class="dox-type">Boolean</div>
+            <div class="dox-description">ng-show for minimize button (defualt true)</div>
+        </div>
+        <div class="dox-param">
+            <div class="dox-name">showToggleFullscreen</div>
+            <div class="dox-type">Boolean</div>
+            <div class="dox-description">ng-show for toggle maximize button (defualt true)</div>
+        </div>
+        <div class="dox-param">
+            <div class="dox-name">showClose</div>
+            <div class="dox-type">Boolean</div>
+            <div class="dox-description">ng-show for toggle maximize button (defualt true)</div>
+        </div>
+    </div>
+    <div class="dox-example">&lt;nd-window-frame show-toggle-fullscreen=&quot;false&quot;&gt;</div>
+</div>
+</div>
+<div class="dox-corejobs"></div>
+</div>

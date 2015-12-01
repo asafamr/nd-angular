@@ -1,5 +1,3 @@
-/*jshint -W082 */
-
 (function() {
 	'use strict';
 	angular.module('ndAngular')

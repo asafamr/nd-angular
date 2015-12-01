@@ -1,8 +1,15 @@
+/**
+ndAngular module
+@name ndAngular module
+@description
+ndAngular module includes directives and services - the NDJS framework frontend
+note:the module wait for NDJS backend to be ready and then bootstraps angular and registers all ndjs pages as urls
+**/
 (function(){
 'use strict';
 
 
-	angular.module('ndAngular',['ui.router','ui.bootstrap','ngSanitize','ngAnimate'])
+	angular.module('ndAngular',['ui.router','ngSanitize','ngAnimate'])
 		.config( NDAngularConfig)
 		.run(NDAngularRun);
 		/*.factory('$exceptionHandler', function() {

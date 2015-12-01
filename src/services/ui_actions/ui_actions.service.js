@@ -1,3 +1,8 @@
+/**
+UI actions service
+@name ndActions service
+@description interface for ui actions registered from the NDJS backend. Actions are injected to this service as native functions that return a promise
+**/
 (function (){
 	'use strict';
 	angular
