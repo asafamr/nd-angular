@@ -1,7 +1,7 @@
 /**
 window frame - css styling not included
 @name ndWindowFrame directive
-@description has 3 buttons that sends events to the window service - minimize, maximize toggleand close
+@description has 3 buttons that sends events to the window service - minimize, maximize toggle and close
 @param {Boolean} showMin ng-show for minimize button (defualt true)
 @param {Boolean} showToggleFullscreen ng-show for toggle maximize button (defualt true)
 @param {Boolean} showClose ng-show for toggle maximize button (defualt true)

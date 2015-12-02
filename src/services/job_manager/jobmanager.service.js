@@ -1,5 +1,4 @@
 /**
-job manager
 @name ndJobManager service
 @description starts, queries ndjs jobs progress
 **/
@@ -22,7 +21,7 @@ job manager
 			startJob: startJob
 		};
 		/**
-		* start a job by name
+		* @description start a job by name
 		* @param {String} jobName name of the job to start
 		* @param {Boolean} force start even it has already started before
 		**/

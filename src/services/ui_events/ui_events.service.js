@@ -1,7 +1,8 @@
 /**
 Events service
 @name ndEvents service
-@description Handles notification pushed from the backend to the UI. Uses angular brodacst to send events. check the job manager for events handling
+@description Handles notification pushed from the backend to the UI.
+Uses angular broadcast to send events. check the job manager for events handling
 **/
 (function (){
 	'use strict';
