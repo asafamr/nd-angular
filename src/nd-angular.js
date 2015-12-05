@@ -42,7 +42,10 @@ note:the module waits for NDJS backend to be ready and then bootstraps angular a
 		}
 		else if(!finishedLoadingNdjs)
 		{
-			ndjs.hasFinishedLoading().then(function(response)
+			ndjs.hasFinishedLoading().catch(function(err)
+			{
+				ndLogger.error('ajax hasFinishedLoading failed '+JSON.stringify(arguments));
+			}).then(function(response)
 			{
 				if(response)
 				{
@@ -53,14 +56,14 @@ note:the module waits for NDJS backend to be ready and then bootstraps angular a
 				else {
 					setTimeout(recheckLoaded,100);
 				}
-			}).catch(function(err)
-			{
-				ndLogger.error('ajax hasFinishedLoading failed '+JSON.stringify(arguments));
 			});
 		}
 		else if(!gotUiActions)
 		{
-			ndjs.getUiActions().then(function(response)
+			ndjs.getUiActions().catch(function(err)
+			{
+				ndLogger.error('ajax getUiActions failed '+JSON.stringify(err.responseText));
+			}).then(function(response)
 			{
 				if(response)
 				{
@@ -70,9 +73,6 @@ note:the module waits for NDJS backend to be ready and then bootstraps angular a
 				else {
 					setTimeout(recheckLoaded,100);
 				}
-			}).catch(function(err)
-			{
-				ndLogger.error('ajax getUiActions failed '+JSON.stringify(err.responseText));
 			});
 		}
 
