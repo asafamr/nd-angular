@@ -4,17 +4,14 @@
   "authors": [
     "Asaf Amrami <asaf_am@yahoo.com>"
   ],
-  "description": "NDJS angular front end",
+  "description": "NDJS Angular frontend",
   "dependencies": {
     "angular": "~1.4",
     "angular-animate": "~1.4.7",
     "angular-sanitize": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
     "octicons": "*"
   },
-  "main": [
-    "./dist/nd-angualr.css",
-    "./dist/nd-angualr.js"
-  ],
   "license": "AGPL-1.0",
   "ignore": [
     "**/.*",
