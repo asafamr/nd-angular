@@ -79,7 +79,7 @@ note:the module waits for NDJS backend to be ready and then bootstraps angular a
 	}
 	function bootstrapNdjs(actions)
 	{
-		ndjs.callUiAction('getPages')
+		ndjs.callUiAction('pages_getPages')
 		.catch(function(err){ndLogger.error('getPages failed '+JSON.stringify(err.responseText));})
 		.then(function(pages)
 	{
@@ -121,8 +121,8 @@ note:the module waits for NDJS backend to be ready and then bootstraps angular a
 
 		}
 	}
-NDAngularRun.$inject=['ndEvents'];
-	function NDAngularRun(ndEvents)
+NDAngularRun.$inject=['ndNotifications'];
+	function NDAngularRun(ndNotifications)
 	{
 		//just initilize injected modules
 	}

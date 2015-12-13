@@ -10,30 +10,31 @@ paging service
 		.module('ndAngular')
 		.factory('ndPager', NDPager );
 
-	NDPager.$inject=['ndPages','ndLogger','$state'];
-	function NDPager(ndPages,ndLogger,$state)
+	NDPager.$inject=['ndPages','ndLogger','$state','$q'];
+	function NDPager(ndPages,ndLogger,$state,$q)
 	{
-		var currenPageNumber=0;
+		var currentPageNumber=0;
 		var minimalPageNumber=0;
 		var nextIsEnabled=true;
 		var backIsEnabled=true;
 
-		var changeCallbacks=[];
+
+		var beforeLeaveCallbacks=[];
 		activate();
 		return {
 			nextEnabled:nextEnabled,
 			backEnabled:backEnabled,
 			getPageNumber:getPageNumber,
 			gotoPageNumber:gotoPageNumber,
+			gotoPageName:gotoPageName,
 			goNextPage:goNextPage,
 			goBackPage:goBackPage,
+			registerBeforeLeaveCallback:registerBeforeLeaveCallback,
 			preventBackFromHere:preventBackFromHere
 		};
 
 		function activate()
 		{
-
-
 				angular.forEach(ndPages,function(page,idx)
 				{
 					var pageAddress='#/page/'+page;
@@ -41,31 +42,93 @@ paging service
 					//$state is async and problematic so we use window.location
 					if(window.location.hash.indexOf(pageAddress) === 0)
 					{
-						currenPageNumber=idx;
+						currentPageNumber=idx;
 					}
-
 			});
-
 		}
 
 
 		/**
-		* @description goto to page number
+		* @description goto to page named {pageName}.
+		* @param {String} pageName target page name
+		* @example gotoPageName('abort')
+		**/
+		function gotoPageName(pageName)
+		{
+			var pageIndex=-1;
+			angular.forEach(ndPages,function(page,idx)
+			{
+				if(page===pageName)
+				{
+					pageIndex=idx;
+				}
+			});
+			if(pageIndex===-1)
+			{
+				ndLogger.error('Could not find paged named '+pageName);
+			}
+			else {
+				gotoPageNumber(pageIndex);
+			}
+		}
+
+		/**
+		* @description goto to page number {pageNum}. out of boundries index generate error - does not enforce next enabled,disabled etc...
 		* @param {Number} pageNum target page number
 		* @example gotoPageNumber(5)
 		**/
 		function gotoPageNumber(pageNum)
-		{
+		{//TODO:this deserve a unit test
 			if(pageNum>=0 && pageNum <ndPages.length)
 			{
-				ndLogger.debug('going to page '+pageNum);
-				nextIsEnabled=backIsEnabled=true;
-				$state.go(ndPages[pageNum]);
+				var currentPromise=$q.when(true);
+				if(beforeLeaveCallbacks.length>0)
+				{
+					beforeLeaveCallbacks.forEach(function(callback)
+					{
+						currentPromise=currentPromise.then(function(ret)
+						{
+							if(!ret)
+							{
+								//if one of the callback function retruned falsy - cancel page leave
+								return false;
+							}
+							else {
+								//chain this callback function return value
+								return $q.when(callback(pageNum));
+							}
+						});
+					});
+				}
+				currentPromise.then(function(ret)
+			{
+				if(ret===undefined)
+				{
+					ndLogger.warn('leave callback returned undefined, is this intentional?');
+				}
+				if(ret)
+					{
+						beforeLeaveCallbacks=[];
+						ndLogger.debug('going to page '+pageNum);
+						nextIsEnabled=backIsEnabled=true;
+						currentPageNumber=pageNum;
+						$state.go(ndPages[pageNum]);
+					}
+				});
 			}
-			else {
+			else {//going to invalid page requested
 				ndLogger.error('could not go to page '+pageNum);
 			}
 
+		}
+		/**
+		* @description register a function to be called before leaving current page. The function will get as param the next page number. Promises are resolved and then if the callback function return a falsy value, the page leave is aborted
+		* @param {callback} function to call when page leave is required
+		* @example registerBeforeLeaveCallback(myFunc) with function myFunc(nextPageNumber)
+		**/
+		function registerBeforeLeaveCallback(callback)
+		{
+			beforeLeaveCallbacks.push(callback);
 		}
 		/**
 		* @description queries or sets if back option enabled
@@ -75,7 +138,7 @@ paging service
 		**/
 		function backEnabled(setEnabled)
 		{
-			if(currenPageNumber<=minimalPageNumber)
+			if(currentPageNumber<=minimalPageNumber)
 			{
 				return false;
 			}
@@ -93,7 +156,7 @@ paging service
 		**/
 		function nextEnabled(setEnabled)
 		{
-			if(currenPageNumber+1>ndPages.length)
+			if(currentPageNumber+1>ndPages.length)
 			{
 				return false;
 			}
@@ -109,28 +172,26 @@ paging service
 		**/
 		function goNextPage()
 		{
-				currenPageNumber+=1;
-				gotoPageNumber(currenPageNumber);
+				gotoPageNumber(currentPageNumber+1);
 		}
 
 		/**
-		* @description go back to the last page
+		* @description go back to the previous page
 		**/
 		function goBackPage()
 		{
 
-				currenPageNumber-=1;
-				gotoPageNumber(currenPageNumber);
+				gotoPageNumber(currentPageNumber-1);
 		}
 
 		/**
 		* @name getPageNumber
-		* @description get page number
+		* @description get current page index
 		* @return {Number} page number
 		**/
 		function getPageNumber()
 		{
-			return currenPageNumber;
+			return currentPageNumber;
 		}
 
 		/**
@@ -139,7 +200,7 @@ paging service
 		**/
 		function preventBackFromHere()
 		{
-			minimalPageNumber=currenPageNumber;
+			minimalPageNumber=currentPageNumber;
 		}
 
 

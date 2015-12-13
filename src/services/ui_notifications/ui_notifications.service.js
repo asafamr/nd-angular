@@ -1,18 +1,17 @@
 /**
 Events service
-@name ndEvents service
+@name ndNotifications service
 @description Handles notification pushed from the backend to the UI.
-Uses angular broadcast to send events. check the job manager for events handling
+Uses angular broadcast to send notifications. check the job manager for notifications handling
 **/
 (function (){
 	'use strict';
-	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
 		.module('ndAngular')
-		.factory('ndEvents', NDEvents );
+		.factory('ndNotifications', NdNotifications );
 
-	NDEvents.$inject=['$rootScope','$interval','ndLogger','ndActions'];
-	function NDEvents($rootScope,$interval,ndLogger,ndActions)
+	NdNotifications.$inject=['$rootScope','$interval','ndLogger','ndActions'];
+	function NdNotifications($rootScope,$interval,ndLogger,ndActions)
 	{
 		var lastIdx=0;
 		var readyForCall=true;
@@ -26,7 +25,7 @@ Uses angular broadcast to send events. check the job manager for events handling
 			if(readyForCall)
 			{
 				readyForCall=false;
-			ndActions.getNotificationsFromIdx(lastIdx).then(
+			ndActions.notifications_getFromIdx(lastIdx).then(
 				function(notificationsArray)
 				{
 					if(notificationsArray.length===0)return;
@@ -35,7 +34,7 @@ Uses angular broadcast to send events. check the job manager for events handling
 					{
 						void idx;
 						$rootScope.$broadcast(val.name,val);
-						ndLogger.debug('sending event ' +angular.toJson(val));
+						//ndLogger.debug('sending notification ' +angular.toJson(val));
 					});
 				}).finally(function(){readyForCall=true;});
 			}

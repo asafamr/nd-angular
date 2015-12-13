@@ -10,11 +10,11 @@
 		.module('ndAngular')
 		.factory('ndJobManager', NDJobManager );
 
-	NDJobManager.$inject=['ndEvents','ndLogger','$rootScope','ndActions'];
-	function NDJobManager(ndEvents,ndLogger,$rootScope,ndActions)
+	NDJobManager.$inject=['ndLogger','$rootScope','ndActions'];
+	function NDJobManager(ndLogger,$rootScope,ndActions)
 	{
 		var jobsProgress={};
-
+		var jobPendingCallbacks={};
 		activate();
 		return {
 			getJobProgress:	getJobProgress,
@@ -24,8 +24,9 @@
 		* @description start a job by name
 		* @param {String} jobName name of the job to start
 		* @param {Boolean} force start even it has already started before
+		* @param {Function} pendingCallback called when job is waiting for user decision on error - pendingCallback(err,details,options,answerCallback) example in https://github.com/asafamr/nd-proj/blob/master/front/views/extract/extract.controller.js
 		**/
-		function startJob(jobName,force)
+		function startJob(jobName,force,pendingCallback)
 		{
 			if(typeof force === 'undefined'){force=false;}
 			if(jobsProgress.hasOwnProperty(jobName))
@@ -33,7 +34,13 @@
 				ndLogger.warn(jobName +' already in job queue');
 				return;
 			}
-			ndActions.startNamedJob(jobName,force);
+			if(typeof pendingCallback !== 'undefined'){
+				jobPendingCallbacks[jobName]=pendingCallback;
+			}
+			ndActions.job_startNamedJob(jobName,force).catch(function(err)
+			{
+				ndLogger.error('Job '+jobName+' failed to start: '+err);
+			});
 		}
 		/**
 		* @name getJobProgress
@@ -62,14 +69,8 @@
 				jobsProgress[jobName]=data.value.progress;
 			}
 		}
-		function jobRetry(data)
-		{
-			window.alert('job asked retry - we could retry,ignore or abort'+JSON.stringify(data));
-		}
-		function jobError(data)
-		{
-			window.alert('job unknown error'+JSON.stringify(data));
-		}
+
+
 
 
 		function activate()
@@ -79,16 +80,35 @@
 				ndjs.setPersistent('jobs',{});
 			}
 			//jobsData=ndjs.getPersistent('jobs');
-			$rootScope.$on('jobstatus',function(event,data){
+			$rootScope.$on('job_status',function(event,data){
 				updateJobProgress(data);
 			});
 
-			$rootScope.$on('jobretry',function(event,data){
-				jobRetry(data);
+			$rootScope.$on('job_pending',function(event,data){
+
+				var jobName=data.value.jobName;
+				if(jobPendingCallbacks.hasOwnProperty(jobName))
+				{
+					ndLogger.debug('Job '+jobName+' pending');
+					jobPendingCallbacks[jobName](data.value.message,data.value.detailed,data.value.options,function(answer)
+						{
+							ndLogger.debug('Job '+jobName+' realeasing from pending status:'+answer);
+							ndActions.job_releasePendingJob(data.value.pendingId,answer);
+						});
+					//delete jobPendingCallbacks[jobName];
+				}
+				else
+				{
+					ndLogger.warn('Job '+ jobName+' pending but no pending callback specified');
+				}
 			});
 
-			$rootScope.$on('joberror',function(event,data){
-				jobError(data);
+			$rootScope.$on('job_failed',function(event,data){
+					ndLogger.error('Job '+data.value.jobName+' failed: '+data.value.details);
+			});
+
+			$rootScope.$on('job_aborted',function(event,data){
+					ndLogger.debug('Job '+data.value.jobName+' aborted');
 			});
 
 		}

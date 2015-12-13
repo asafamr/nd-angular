@@ -8,10 +8,10 @@ Window service
 	//var myUrl = document.currentScript.src;//eslint-disable-line angular/ng_document_service
 	angular
 		.module('ndAngular')
-		.factory('ndWindow', NDEvents );
+		.factory('ndWindow', NdWindow );
 
-	NDEvents.$inject=[];
-	function NDEvents()
+	NdWindow.$inject=[];
+	function NdWindow()
 	{
 		activate();
 		return {
